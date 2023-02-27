@@ -7,6 +7,14 @@ class Cart with ChangeNotifier{
 
   int get cartItemCount => _order.length;
 
+  double get totalAmount{
+    double result = 0;
+    for (var cartItem in _order.values) {
+      result += cartItem.price;
+    }
+    return result;
+  }
+
   Map <String, CartItem> get order => _order;
 
   void addProductToCart(Product product){
@@ -18,6 +26,12 @@ class Cart with ChangeNotifier{
           CartItem(DateTime.now().toString(), product, 1),
       );
     }
+    notifyListeners();
+  }
+
+  void deleteFromCart(String productId){
+    _order.remove(productId);
+    notifyListeners();
   }
 }
 

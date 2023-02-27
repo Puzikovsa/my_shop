@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_shop/pages/cart_page.dart';
 import 'package:my_shop/providers/cart.dart';
 import 'package:provider/provider.dart';
 import '../widgets/badge.dart';
@@ -51,10 +52,13 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
             builder: (context, cart, child) =>
                 Badge(
                   value: cart.cartItemCount.toString(),
-                  child: IconButton(onPressed: () {},
-                    icon: const Icon(Icons.shopping_cart),
-                  ),
+                  child: child!,
                 ),
+            child: IconButton(onPressed: () {
+              Navigator.pushNamed(context, CartPage.route);
+            },
+              icon: const Icon(Icons.shopping_cart),
+            ),
           ),
         ],
         centerTitle: true,
