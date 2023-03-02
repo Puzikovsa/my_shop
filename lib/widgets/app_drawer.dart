@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../pages/orders_page.dart';
+
 class AppDrawer extends StatelessWidget{
   const AppDrawer({super.key});
 
@@ -25,7 +27,7 @@ class AppDrawer extends StatelessWidget{
             leading: const Icon(Icons.payment),
             title: const Text('Мои заказы'),
             onTap: () {
-              // Navigator.of(context).pushReplacementNamed('/');
+              Navigator.of(context).pushReplacementNamed(OrdersPage.rout);
             },
           ),
         ],

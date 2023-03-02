@@ -33,6 +33,11 @@ class Cart with ChangeNotifier{
     _order.remove(productId);
     notifyListeners();
   }
+
+  void cartClear(){
+    _order.clear();
+    notifyListeners();
+  }
 }
 
 class CartItem {

@@ -53,7 +53,7 @@ class CartItems extends StatelessWidget {
               children: [
                 Chip(
                   label: Text(
-                    '$price руб.',
+                    '${price.toStringAsFixed(2)} руб.',
                     style: const TextStyle(
                       color: Colors.white,
                     ),

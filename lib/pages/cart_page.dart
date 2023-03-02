@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_shop/providers/orders.dart';
 import 'package:my_shop/widgets/cart_Items.dart';
 import 'package:provider/provider.dart';
 import '../providers/cart.dart';
@@ -35,7 +36,13 @@ class CartPage extends StatelessWidget {
                     backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Provider.of<Orders>(context, listen: false)
+                          .addCartToOrders(
+                              cartProducts: cart.order.values.toList(),
+                              total: cart.totalAmount);
+                      cart.cartClear();
+                    },
                     child: const Text('Оформить заказ'),
                   )
                 ],
