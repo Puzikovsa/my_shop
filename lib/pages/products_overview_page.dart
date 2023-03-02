@@ -19,7 +19,7 @@ class ProductsOverviewPage extends StatefulWidget {
 
 class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
 
-  var _showOnlyFavourites = false;
+  bool _showOnlyFavourites = false;
 
   @override
   Widget build(BuildContext context) {

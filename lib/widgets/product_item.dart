@@ -9,7 +9,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<Product>(context, listen: false);
+    final product = Provider.of<Product>(context);
     final cart = Provider.of<Cart>(context, listen: false);
 
     return ClipRRect(
@@ -23,8 +23,9 @@ class ProductItem extends StatelessWidget {
           ),
           leading: IconButton(
             color: Theme.of(context).colorScheme.secondary,
-            icon: Icon(
-                product.isFavourite ? Icons.favorite : Icons.favorite_border),
+            icon: Icon((product.isFavourite ? Icons.favorite :
+            Icons.favorite_border),
+            ),
             iconSize: 20,
             onPressed: () {
               product.changeFavouriteStatus();
