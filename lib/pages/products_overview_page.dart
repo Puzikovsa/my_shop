@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_shop/pages/cart_page.dart';
 import 'package:my_shop/providers/cart.dart';
 import 'package:provider/provider.dart';
+import '../widgets/app_drawer.dart';
 import '../widgets/badge.dart';
 import '../widgets/products_grid.dart';
 
@@ -64,6 +65,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
         centerTitle: true,
         title: const Text('Товары'),
       ),
+      drawer: const AppDrawer(),
       body: ProductsGrid(showFavourite: _showOnlyFavourites,),
     );
   }
