@@ -52,6 +52,7 @@ class ProductItem extends StatelessWidget {
             iconSize: 20,
             onPressed: () {
               cart.addProductToCart(product);
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: const Text('Товар добавлен в корзину'),
