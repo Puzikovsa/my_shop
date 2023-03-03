@@ -23,12 +23,27 @@ class ProductItem extends StatelessWidget {
           ),
           leading: IconButton(
             color: Theme.of(context).colorScheme.secondary,
-            icon: Icon((product.isFavourite ? Icons.favorite :
-            Icons.favorite_border),
+            icon: Icon(
+              (product.isFavourite ? Icons.favorite : Icons.favorite_border),
             ),
             iconSize: 20,
             onPressed: () {
               product.changeFavouriteStatus();
+              if (product.isFavourite) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Товар добавлен в избранные'),
+                    duration: Duration(seconds: 1),
+                  ),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Товар удален из избранных'),
+                    duration: Duration(seconds: 1),
+                  ),
+                );
+              }
             },
           ),
           trailing: IconButton(
@@ -37,6 +52,17 @@ class ProductItem extends StatelessWidget {
             iconSize: 20,
             onPressed: () {
               cart.addProductToCart(product);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text('Товар добавлен в корзину'),
+                  duration: const Duration(seconds: 2),
+                  action: SnackBarAction(
+                      label: 'ОТМЕНА',
+                      onPressed: () {
+                        cart.deleteSingleProduct(product.id);
+                      }),
+                ),
+              );
             },
           ),
         ),

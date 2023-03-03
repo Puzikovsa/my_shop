@@ -38,13 +38,27 @@ class Cart with ChangeNotifier{
     _order.clear();
     notifyListeners();
   }
+
+  void deleteSingleProduct(String productId){
+    if(!_order.containsKey(productId)){
+      return;
+    }else{
+      if(_order[productId]!.quantity > 1){
+        _order.update(productId, (cartItem) =>
+            CartItem(cartItem.id, cartItem.product, cartItem.quantity - 1));
+      } else{
+        _order.remove(productId);
+      }
+    }
+    notifyListeners();
+  }
 }
 
 class CartItem {
 
   final String id;
   final Product product;
-  final int quantity;
+  late final int quantity;
   late final double price;
 
   CartItem(this.id, this.product, this.quantity)
