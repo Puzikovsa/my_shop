@@ -15,6 +15,10 @@ class UserProductsPage extends StatelessWidget{
       ),
       drawer: const AppDrawer(),
       body: Container(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {  },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
