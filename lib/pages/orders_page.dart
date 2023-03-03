@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../widgets/app_drawer.dart';
 
 class OrdersPage extends StatelessWidget {
-  static String rout = '/orders';
+  static String route = '/orders';
 
   const OrdersPage({super.key});
 

@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 class ProductDetailPage extends StatelessWidget {
   const ProductDetailPage({super.key});
 
-  static const String rout = '/product-details';
+  static const String route = '/product-details';
 
   @override
   Widget build(BuildContext context) {
