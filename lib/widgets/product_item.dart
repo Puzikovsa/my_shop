@@ -32,14 +32,17 @@ class ProductItem extends StatelessWidget {
               if (product.isFavourite) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('Товар добавлен в избранные'),
+                    content: Text('Товар добавлен в избранные',
+                    textAlign: TextAlign.center,),
                     duration: Duration(seconds: 1),
                   ),
                 );
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('Товар удален из избранных'),
+                    content: Text('Товар удален из избранных',
+                      textAlign: TextAlign.center,
+                    ),
                     duration: Duration(seconds: 1),
                   ),
                 );
