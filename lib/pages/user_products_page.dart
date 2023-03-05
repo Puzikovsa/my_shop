@@ -3,6 +3,7 @@ import 'package:my_shop/providers/products_provider.dart';
 import 'package:provider/provider.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/user_products_item.dart';
+import 'edit_product_page.dart';
 
 class UserProductsPage extends StatelessWidget{
   static const String route = '/user-products';
@@ -24,11 +25,14 @@ class UserProductsPage extends StatelessWidget{
         child: ListView.builder(
           itemCount: products.items.length,
             itemBuilder: (_, index) =>
-                const UserProductsItem(),
+                 UserProductsItem(product: products.items[index],
+                 ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {  },
+        onPressed: () {
+          Navigator.of(context).pushNamed(EditProductPage.route);
+        },
         child: const Icon(Icons.add),
       ),
     );

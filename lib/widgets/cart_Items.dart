@@ -65,7 +65,7 @@ class CartItems extends StatelessWidget {
           ),
         );
       },
-      direction: DismissDirection.endToStart,
+      direction: DismissDirection.startToEnd,
       onDismissed: (direction) {
         Provider.of<Cart>(context, listen: false).deleteFromCart(productId);
       },
