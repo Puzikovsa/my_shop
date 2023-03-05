@@ -63,7 +63,7 @@ class ProductItem extends StatelessWidget {
                   action: SnackBarAction(
                       label: 'ОТМЕНА',
                       onPressed: () {
-                        cart.deleteSingleProduct(product.id);
+                        cart.deleteSingleProduct(product.id!);
                       }),
                 ),
               );

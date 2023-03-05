@@ -19,10 +19,10 @@ class Cart with ChangeNotifier{
 
   void addProductToCart(Product product){
     if(_order.containsKey(product.id)) {
-      _order.update(product.id, (cartItem) =>
+      _order.update(product.id!, (cartItem) =>
           CartItem(cartItem.id, product, cartItem.quantity + 1));
     } else {
-      _order.putIfAbsent(product.id, () =>
+      _order.putIfAbsent(product.id!, () =>
           CartItem(DateTime.now().toString(), product, 1),
       );
     }
