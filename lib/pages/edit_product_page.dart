@@ -25,6 +25,22 @@ class _EditProductPageState extends State<EditProductPage> {
       price: -1,
       imageURL: '');
 
+  var _isInit = true;
+
+  @override
+  void didChangeDependencies() {
+    if(_isInit){
+      final productId = ModalRoute.of(context)!.settings.arguments as String?;
+      if(productId != null){
+        _newProduct = Provider.of<Products>(
+            context, listen: false).findById(productId);
+        _imageController.text = _newProduct.imageURL;
+      }
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
   @override
   void dispose() {
     _priceFocusNode.dispose();
@@ -47,6 +63,7 @@ class _EditProductPageState extends State<EditProductPage> {
           child: ListView(
             children: [
               TextFormField(
+                initialValue: _newProduct.title,
                 decoration: const InputDecoration(
                   labelText: 'Название товара',
                 ),
@@ -70,6 +87,8 @@ class _EditProductPageState extends State<EditProductPage> {
                 },
               ),
               TextFormField(
+                initialValue: _newProduct.price > 0 ?
+                _newProduct.price.toString() : '',
                 decoration: const InputDecoration(
                   labelText: 'Стоимость',
                 ),
@@ -99,6 +118,7 @@ class _EditProductPageState extends State<EditProductPage> {
                 },
               ),
               TextFormField(
+                initialValue: _newProduct.description,
                 decoration: const InputDecoration(
                   labelText: 'Описание товара',
                 ),
@@ -193,7 +213,13 @@ class _EditProductPageState extends State<EditProductPage> {
         onPressed: () {
           if(_key.currentState!.validate()) {
             _key.currentState!.save();
-            Provider.of<Products>(context, listen: false).addProduct(_newProduct);
+            if(_newProduct.id == null) {
+              Provider.of<Products>(context, listen: false).addProduct(
+                  _newProduct);
+            }else{
+              Provider.of<Products>(context, listen: false).updateProduct(
+                  _newProduct.id!, _newProduct);
+            }
             Navigator.of(context).pop();
           }
         },

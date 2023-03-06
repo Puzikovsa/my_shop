@@ -21,7 +21,8 @@ class UserProductsItem extends StatelessWidget{
             mainAxisSize: MainAxisSize.min,
             children: [
               IconButton(onPressed: () {
-                Navigator.of(context).pushNamed(EditProductPage.route);
+                Navigator.of(context).pushNamed(
+                    EditProductPage.route, arguments: product.id);
               },
                   icon:  Icon(Icons.edit,
                   color: Theme.of(context).colorScheme.primary,
