@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_shop/providers/product.dart';
+import 'package:my_shop/providers/products_provider.dart';
+import 'package:provider/provider.dart';
 
 class EditProductPage extends StatefulWidget {
   static const String route = '/edit-product';
@@ -52,6 +54,20 @@ class _EditProductPageState extends State<EditProductPage> {
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_priceFocusNode);
                 },
+                onSaved: (newvalue) {
+                  _newProduct = Product(
+                      id: _newProduct.id,
+                      title: newvalue ?? _newProduct.title,
+                      description: _newProduct.description,
+                      price:_newProduct.price,
+                      imageURL: _newProduct.imageURL);
+                },
+                validator: (value) {
+                  if(value == null || value.isEmpty){
+                   return 'Введите название товара';
+                  }
+                  return null;
+                },
               ),
               TextFormField(
                 decoration: const InputDecoration(
@@ -61,6 +77,26 @@ class _EditProductPageState extends State<EditProductPage> {
                 focusNode: _priceFocusNode,
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
+                onSaved: (newvalue) {
+                  _newProduct = Product(
+                      id: _newProduct.id,
+                      title: _newProduct.title,
+                      description: _newProduct.description,
+                      price: double.tryParse(newvalue!) ?? _newProduct.price,
+                      imageURL: _newProduct.imageURL);
+                },
+                validator: (value) {
+                  if(value == null || value.isEmpty){
+                    return 'Введите цену товара';
+                  }
+                  if(double.tryParse(value) == 0){
+                    return 'Введите корректное число';
+                  }
+                  if(double.tryParse(value)! < 0){
+                    return 'Введите корректную стоимость';
+                  }
+                  return null;
+                },
               ),
               TextFormField(
                 decoration: const InputDecoration(
@@ -70,6 +106,23 @@ class _EditProductPageState extends State<EditProductPage> {
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.multiline,
                 maxLines: 3,
+                onSaved: (newvalue) {
+                  _newProduct = Product(
+                      id: _newProduct.id,
+                      title: _newProduct.title,
+                      description: newvalue?? _newProduct.description,
+                      price: _newProduct.price,
+                      imageURL: _newProduct.imageURL);
+                },
+                validator: (value) {
+                  if(value == null || value.isEmpty){
+                    return 'Введите описание товара';
+                  }
+                  if(value.length < 10){
+                    return 'Описание должно быть длиннее 10 символов';
+                  }
+                  return null;
+                },
               ),
               Row(
                 children: [
@@ -99,9 +152,34 @@ class _EditProductPageState extends State<EditProductPage> {
                           decoration: const InputDecoration(
                             labelText: 'Ссылка на фотографию',
                       ),
+                        onSaved: (newvalue) {
+                          _newProduct = Product(
+                              id: _newProduct.id,
+                              title: _newProduct.title,
+                              description: _newProduct.description,
+                              price: _newProduct.price,
+                              imageURL: newvalue ?? _newProduct.imageURL);
+                        },
                         onEditingComplete: () {
                           setState(() {
                           });
+                        },
+                        validator: (value) {
+                          if(value == null || value.isEmpty){
+                            return 'Введите ссылку на фотографию товара';
+                          }
+                          if(!value.startsWith('http:/')
+                              && (!value.startsWith('https:/')
+                          )){
+                            return 'Введите корректную ссылку';
+                          }
+                          if(!value.endsWith('.jpeg')
+                              && !value.endsWith('jpg')
+                                  && !value.endsWith('png')
+                              ){
+                            return 'Введите корректную ссылку';
+                          }
+                          return null;
                         },
                       ),
                   ),
@@ -113,7 +191,11 @@ class _EditProductPageState extends State<EditProductPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _key.currentState!.save();
+          if(_key.currentState!.validate()) {
+            _key.currentState!.save();
+            Provider.of<Products>(context, listen: false).addProduct(_newProduct);
+            Navigator.of(context).pop();
+          }
         },
         child: const Icon(Icons.add),
       ),

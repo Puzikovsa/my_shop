@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'product.dart';
 
 class Products with ChangeNotifier{
+  static int index = 5;
 
   final List<Product> _items = [
     Product(
@@ -28,7 +29,6 @@ class Products with ChangeNotifier{
         description: 'Классическая верхняя одежда',
         price: 13000,
         imageURL: 'http://best-guide.ru/wp-content/uploads/2013/10/Covert-Coat-Cordings.jpg'),
-
   ];
 
   List<Product> get items => _items;
@@ -39,7 +39,15 @@ class Products with ChangeNotifier{
   Product findById(String id) =>
       _items.firstWhere((product) => product.id == id);
 
-  void addProduct(){
+  void addProduct(Product product){
+    final newProduct = Product(
+        id: 'p$index',
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        imageURL: product.imageURL);
+    index ++;
+    _items.add(newProduct);
     notifyListeners();
   }
 }
