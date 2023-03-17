@@ -34,7 +34,7 @@ class ProductItem extends StatelessWidget {
                   const SnackBar(
                     content: Text('Товар добавлен в избранные',
                     textAlign: TextAlign.center,),
-                    duration: Duration(seconds: 1),
+                    duration: Duration(seconds: 2),
                   ),
                 );
               } else {
@@ -43,7 +43,7 @@ class ProductItem extends StatelessWidget {
                     content: Text('Товар удален из избранных',
                       textAlign: TextAlign.center,
                     ),
-                    duration: Duration(seconds: 1),
+                    duration: Duration(seconds: 2),
                   ),
                 );
               }

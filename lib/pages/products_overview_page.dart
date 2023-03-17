@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_shop/pages/cart_page.dart';
 import 'package:my_shop/providers/cart.dart';
+import 'package:my_shop/providers/products_provider.dart';
 import 'package:provider/provider.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/badge.dart';
@@ -21,6 +22,12 @@ class ProductsOverviewPage extends StatefulWidget {
 class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
 
   bool _showOnlyFavourites = false;
+
+  @override
+  void didChangeDependencies(){
+    Provider.of<Products>(context).setProducts();
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
