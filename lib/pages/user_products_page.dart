@@ -10,6 +10,10 @@ class UserProductsPage extends StatelessWidget{
 
   const UserProductsPage({super.key});
 
+  _refreshProducts(BuildContext context) async{
+    Provider.of<Products>(context, listen: false).setProducts();
+  }
+
   @override
   Widget build(BuildContext context) {
     final products = Provider.of<Products>(context);
@@ -20,13 +24,16 @@ class UserProductsPage extends StatelessWidget{
         title: const Text('Мои продукты'),
       ),
       drawer: const AppDrawer(),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: ListView.builder(
-          itemCount: products.items.length,
-            itemBuilder: (_, index) =>
-                 UserProductsItem(product: products.items[index],
-                 ),
+      body: RefreshIndicator(
+        onRefresh: () => _refreshProducts(context),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: ListView.builder(
+            itemCount: products.items.length,
+              itemBuilder: (_, index) =>
+                   UserProductsItem(product: products.items[index],
+                   ),
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
