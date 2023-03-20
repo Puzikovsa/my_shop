@@ -28,7 +28,7 @@ class Products with ChangeNotifier {
         'imageURL': product.imageURL,
         'isFavourite': product.isFavourite,
       }),
-    )
+      )
         .catchError((error) {
       throw error;
     }).then((response) {

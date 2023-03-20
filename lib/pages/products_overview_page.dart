@@ -20,12 +20,19 @@ class ProductsOverviewPage extends StatefulWidget {
 }
 
 class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
-
   bool _showOnlyFavourites = false;
+  var _isLoading = false;
 
   @override
-  void didChangeDependencies(){
-    Provider.of<Products>(context).setProducts();
+  void didChangeDependencies() {
+    setState(() {
+      _isLoading = true;
+    });
+    Provider.of<Products>(context, listen: false).setProducts().then((_) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
     super.didChangeDependencies();
   }
 
@@ -44,8 +51,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                 }
               });
             },
-            itemBuilder: (_) =>
-            [
+            itemBuilder: (_) => [
               const PopupMenuItem(
                 value: FiltersOptions.favourite,
                 child: Text('Только избранные'),
@@ -57,14 +63,14 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
             ],
           ),
           Consumer<Cart>(
-            builder: (context, cart, child) =>
-                Badge(
-                  value: cart.cartItemCount.toString(),
-                  child: child!,
-                ),
-            child: IconButton(onPressed: () {
-              Navigator.pushNamed(context, CartPage.route);
-            },
+            builder: (context, cart, child) => Badge(
+              value: cart.cartItemCount.toString(),
+              child: child!,
+            ),
+            child: IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, CartPage.route);
+              },
               icon: const Icon(Icons.shopping_cart),
             ),
           ),
@@ -73,7 +79,13 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
         title: const Text('Товары'),
       ),
       drawer: const AppDrawer(),
-      body: ProductsGrid(showFavourite: _showOnlyFavourites,),
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : ProductsGrid(
+              showFavourite: _showOnlyFavourites,
+            ),
     );
   }
 }
